@@ -4,32 +4,14 @@ set_zero_timeout = new () ->
 
   zero_timeouts_count = 1000
   counter = 0
-
-  # every 1000 times call old setTimeout.
-  # To prevent errors in slow browsers like IE.
-
-  set_zero_timeout = (fn) ->
-
-    counter--
-    
-    if counter < 0
-      counter = zero_timeouts_count
-      return setTimeout fn, 10
-
-    else
-      timeouts.push fn
-      return window.postMessage messageName, "*"
  
   handle_message = (event) ->
     if event.data is messageName
       event.cancelBubble = true
       event.returnValue = false
 
-      if event.stopPropagation
-        event.stopPropagation()
-
-      if event.preventDefault
-        event.preventDefault()
+      event.stopPropagation?()
+      event.preventDefault?()
 
       if 0 < timeouts.length
         fn = timeouts.shift()
@@ -42,7 +24,18 @@ set_zero_timeout = new () ->
   else if window.attachEvent  # IE before version 9
     zero_timeouts_count = 0
     window.attachEvent "onmessage", handle_message
-
-  reserved_names.push "set_zero_timeout"
  
-  set_zero_timeout
+  (fn) ->
+
+    counter--
+    
+    # every 1000 iterations call old setTimeout.
+    # To prevent errors in slow browsers like IE.
+
+    if counter < 0
+      counter = zero_timeouts_count
+      return setTimeout fn, 10
+
+    else
+      timeouts.push fn
+      return window.postMessage messageName, "*"
