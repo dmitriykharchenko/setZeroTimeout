@@ -1,0 +1,21 @@
+{
+  "name": "setZeroTimeout",
+  "version": "0.1.0",
+  "author": "Dmitriy Kharchenko <akimoto@yandex.ru>",
+  "description": "Up to 25x faster than setTimeout(handler, 0)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aki-russia/setZeroTimeout.git"
+  },
+  "dependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-concat": "0.3.0",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-clean": "0.5.0",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-coffee": "*",
+    "grunt-contrib-jasmine": "~0.5.1"
+  },
+  "license": "MIT"
+}
