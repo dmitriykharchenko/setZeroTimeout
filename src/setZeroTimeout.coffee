@@ -1,11 +1,11 @@
-set_zero_timeout = new () ->
+setZeroTimeout = new () ->
   timeouts = []
   messageName = "zero-timeout-message-" + new Date().getTime()
 
-  zero_timeouts_count = 1000
+  zeroTimeoutsCount = 1000
   counter = 0
  
-  handle_message = (event) ->
+  handleMessage = (event) ->
     if event.data is messageName
       event.cancelBubble = true
       event.returnValue = false
@@ -19,11 +19,11 @@ set_zero_timeout = new () ->
 
  
   if window.addEventListener
-    window.addEventListener "message", handle_message, true
+    window.addEventListener "message", handleMessage, true
 
   else if window.attachEvent  # IE before version 9
-    zero_timeouts_count = 0
-    window.attachEvent "onmessage", handle_message
+    zeroTimeoutsCount = 0
+    window.attachEvent "onmessage", handleMessage
  
   (fn) ->
 
@@ -33,7 +33,7 @@ set_zero_timeout = new () ->
     # To prevent errors in slow browsers like IE.
 
     if counter < 0
-      counter = zero_timeouts_count
+      counter = zeroTimeoutsCount
       return setTimeout fn, 10
 
     else
